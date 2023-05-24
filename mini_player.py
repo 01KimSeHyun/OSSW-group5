@@ -28,7 +28,6 @@ import os
 import sys
 import queue
 import platform
-import pafy
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 import vlc
@@ -83,17 +82,21 @@ class MiniPlayer(QtWidgets.QMainWindow):
         self.vboxlayout = QtWidgets.QVBoxLayout()
         self.vboxlayout.addWidget(self.videoframe)
         self.widget.setLayout(self.vboxlayout)
-     
+
     def open_file(self):
-        # setting url
-        url = "https://www.youtube.com/watch?v=Lr9xbHtpAfU"
-        video = pafy.new(url)
-        best = video.getbest()
-        self.media = self.instance.media_new(best.url)
-        
+        """Open a media file in a MediaPlayer
+        """
+        dialog_txt = "Choose Media File"
+        filename = QtWidgets.QFileDialog.getOpenFileName(self, dialog_txt, os.path.expanduser('~'))
+        if not filename[0]:
+            return
+
+        # getOpenFileName returns a tuple, so use only the actual file name
+        self.media = self.instance.media_new(filename[0])
+
         # Put the media in the media player
         self.mediaplayer.set_media(self.media)
-        
+
         # Parse the metadata of the file
         self.media.parse()
 
@@ -159,7 +162,7 @@ def main():
     player.show()
     player.resize(480, 480)
 
-    #_ = Client("localhost", 10000, data_queue)
+    _ = Client("localhost", 10000, data_queue)
     sys.exit(app.exec_())
 
 
