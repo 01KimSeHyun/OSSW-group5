@@ -41,6 +41,10 @@ class MiniPlayer(QtWidgets.QMainWindow):
 
     def __init__(self, data_queue, master=None):
         QtWidgets.QMainWindow.__init__(self, master)
+        
+        #QMainWindow position and size 
+        self.setGeometry(0, 0, 400, 300)
+        
         self.setWindowTitle("Mini Player")
         self.statusbar = self.statusBar()
         self.statusbar.showMessage("Ready")
@@ -69,13 +73,11 @@ class MiniPlayer(QtWidgets.QMainWindow):
         """
         self.widget = QtWidgets.QWidget(self)
         self.setCentralWidget(self.widget)
-
         # In this widget, the video will be drawn
         if platform.system() == "Darwin":  # for MacOS
             self.videoframe = QtWidgets.QMacCocoaViewContainer(0)
         else:
             self.videoframe = QtWidgets.QFrame()
-
         self.palette = self.videoframe.palette()
         self.palette.setColor(QtGui.QPalette.Window, QtGui.QColor(0, 0, 0))
         self.videoframe.setPalette(self.palette)
@@ -84,7 +86,8 @@ class MiniPlayer(QtWidgets.QMainWindow):
         self.vboxlayout = QtWidgets.QVBoxLayout()
         self.vboxlayout.addWidget(self.videoframe)
         self.widget.setLayout(self.vboxlayout)
-     
+        self.widget.setGeometry(0, 0, 1000, 1000)
+        
     def open_file(self):
         # setting url
         url = "https://www.youtube.com/watch?v=Lr9xbHtpAfU"
