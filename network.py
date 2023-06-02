@@ -134,9 +134,6 @@ class Client:
             # Create a TCP/IP socket
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-            # Connect the socket to the port where the server is listening
-            logger.info("Connecting to %s port %s", address, port)
-            self.sock.connect((address, port))
         else:
 
             # Create a UDS socket
